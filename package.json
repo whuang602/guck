@@ -1,0 +1,14 @@
+{
+  "name": "guck",
+  "version": "1.0.0",
+  "description": "Guck (git duck) — a tiny always-on-top git toolbar that lives on your screen as a duck.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "node scripts/package.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "electron": "42.4.0"
+  }
+}

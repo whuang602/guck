@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'">
+  <title>Guck</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="mode-idle">
+
+  <!-- collapsed edge strip: just the mascot -->
+  <div id="idle-strip" title="Guck">
+    <div id="mascot"></div>
+  </div>
+
+  <!-- expanded bar + panel -->
+  <div id="app">
+    <div id="panel">
+      <div class="panel-header">
+        <span id="panel-tab" class="panel-tab">git status</span>
+        <button id="panel-close" class="icon-btn" aria-label="Close panel">
+          <svg viewBox="0 0 16 16" width="14" height="14"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div id="panel-body"></div>
+    </div>
+
+    <div id="bar">
+      <div id="bar-grip" title="drag to move">
+        <svg viewBox="0 0 8 14" width="7" height="13">
+          <circle cx="2" cy="2" r="1.2" fill="currentColor"/><circle cx="6" cy="2" r="1.2" fill="currentColor"/>
+          <circle cx="2" cy="7" r="1.2" fill="currentColor"/><circle cx="6" cy="7" r="1.2" fill="currentColor"/>
+          <circle cx="2" cy="12" r="1.2" fill="currentColor"/><circle cx="6" cy="12" r="1.2" fill="currentColor"/>
+        </svg>
+      </div>
+      <button class="seg seg-branch" id="seg-branch" title="switch branch">
+        <span class="branch-chip">
+          <svg viewBox="0 0 16 16" width="13" height="13"><path d="M5 3.5v9M5 3.5a1.5 1.5 0 100-.01M5 12.5a1.5 1.5 0 100 .01M11 5a1.5 1.5 0 100-.01M11 6.5c0 2.5-2 3-4 3.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <span id="branch-name">…</span>
+          <svg viewBox="0 0 16 16" width="10" height="10"><path d="M4 10l4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </button>
+
+      <button class="seg" id="seg-changes">
+        <svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg>
+        <span id="changes-label">0</span>
+      </button>
+
+      <button class="seg" id="seg-diff">
+        <svg viewBox="0 0 16 16" width="14" height="14"><path d="M4 1.5h5.5L13 5v9.5H4z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+        <span>diff</span>
+      </button>
+
+      <button class="seg" id="seg-commit">
+        <svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M1 8h4M11 8h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <span>commit</span>
+      </button>
+
+      <button class="seg seg-push" id="seg-push">
+        <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 14V4M4.5 7.5L8 4l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>push</span>
+        <span id="push-badge" class="badge hidden">0</span>
+      </button>
+
+      <button class="seg" id="seg-browse">
+        <svg viewBox="0 0 16 16" width="14" height="14"><path d="M2 4.5A1.5 1.5 0 013.5 3h2l1.2 1.5H12.5A1.5 1.5 0 0114 6v5.5A1.5 1.5 0 0112.5 13h-9A1.5 1.5 0 012 11.5v-7z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span>browse</span>
+      </button>
+
+      <button class="seg seg-icon-only" id="seg-setup" title="setup: directory, remote, more">
+        <svg viewBox="0 0 16 16" width="15" height="15">
+          <circle cx="8" cy="8" r="4.2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="8" cy="8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M8 1.2v2.1M8 12.7v2.1M1.2 8h2.1M12.7 8h2.1M3.2 3.2l1.5 1.5M11.3 11.3l1.5 1.5M12.8 3.2l-1.5 1.5M4.7 11.3l-1.5 1.5" stroke="currentColor" stroke-width="2.1"/>
+        </svg>
+      </button>
+
+      <button class="seg seg-toggle" id="seg-toggle" aria-label="Toggle panel">
+        <svg id="toggle-icon" viewBox="0 0 16 16" width="14" height="14"><path d="M3.5 10L8 5.5 12.5 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <button class="seg seg-icon-only" id="seg-close" title="Hide Guck" aria-label="Hide Guck">
+        <svg viewBox="0 0 16 16" width="14" height="14"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+
+      <!-- shown instead of segments when cwd is not a repo -->
+      <div id="no-repo" class="hidden">
+        <span class="muted">no git repo in this folder</span>
+        <button id="btn-init" class="mini-btn">git init</button>
+      </div>
+    </div>
+
+    <!-- set-once-and-forget drop-up, anchored above the gear -->
+    <div id="menu">
+      <button class="menu-item" id="menu-dir">
+        <svg viewBox="0 0 16 16" width="14" height="14"><path d="M1.5 4a1.5 1.5 0 011.5-1.5h3l1.5 2H13A1.5 1.5 0 0114.5 6v6A1.5 1.5 0 0113 13.5H3A1.5 1.5 0 011.5 12V4z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="menu-text">
+          <span class="menu-sub muted">directory</span>
+          <span id="menu-dir-label">…</span>
+        </span>
+      </button>
+      <button class="menu-item" id="menu-remote">
+        <svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M2 8h12M8 2c-2 2.2-2 9.8 0 12M8 2c2 2.2 2 9.8 0 12" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>
+        <span>remote &amp; github auth</span>
+      </button>
+      <button class="menu-item" id="menu-theme">
+        <svg id="theme-icon-sun" viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M12.6 3.4l-1.4 1.4M4.8 11.2l-1.4 1.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <svg id="theme-icon-moon" viewBox="0 0 16 16" width="14" height="14" class="hidden"><path d="M13.5 9.5A6 6 0 116.5 2.5a4.8 4.8 0 007 7z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+        <span id="theme-label">dark mode</span>
+      </button>
+      <div class="menu-sep"></div>
+      <div class="menu-item menu-disabled">
+        <svg viewBox="0 0 16 16" width="14" height="14"><path d="M4 2.5v11M4 2.5a1.5 1.5 0 100-.01M4 13.5a1.5 1.5 0 100 .01M12 13.5a1.5 1.5 0 100 .01M12 12V7.5A2.5 2.5 0 009.5 5H6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <span>rebase</span><span class="soon-tag">soon</span>
+      </div>
+      <div class="menu-item menu-disabled">
+        <svg viewBox="0 0 16 16" width="14" height="14"><path d="M2.5 5.5h11v8h-11zM2.5 5.5L4 2.5h8l1.5 3M8 8v3M6.5 9.5L8 11l1.5-1.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <span>stash</span><span class="soon-tag">soon</span>
+      </div>
+    </div>
+
+    <!-- branch switcher drop-up, anchored above the branch chip -->
+    <div id="branch-menu"></div>
+  </div>
+
+  <script src="mascot.js"></script>
+  <script src="panel.js"></script>
+  <script src="bar.js"></script>
+</body>
+</html>
