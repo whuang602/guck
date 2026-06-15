@@ -79,10 +79,18 @@ jobs:
         shell: pwsh
         run: Compress-Archive -Path dist/Guck/* -DestinationPath "Guck-$env:TAG-${{ matrix.asset }}.zip"
 
-      - name: Archive (macOS / Linux)
-        if: runner.os != 'Windows'
+      # ditto is bundle-aware: it preserves the .app's internal symlinks instead
+      # of following them, so the ~150MB Electron framework isn't duplicated.
+      - name: Archive (macOS)
+        if: runner.os == 'macOS'
         shell: bash
-        run: cd dist/Guck && zip -r -X "../../Guck-$TAG-${{ matrix.asset }}.zip" .
+        run: ditto -c -k --sequesterRsrc --keepParent "dist/Guck/Guck.app" "Guck-$TAG-${{ matrix.asset }}.zip"
+
+      # -y stores symlinks as symlinks rather than dereferencing them.
+      - name: Archive (Linux)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: cd dist/Guck && zip -r -X -y "../../Guck-$TAG-${{ matrix.asset }}.zip" .
 
       - name: Upload to release
         env:
