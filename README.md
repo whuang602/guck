@@ -1,22 +1,37 @@
-# Guck 🦆
+# Guck (Git Duck)
 
-**Guck** (Git Duck) is a tiny always-on-top git toolbar that lives on your
-screen as a little dude in a duck costume. Click the duck and it expands into a
-command bar for everyday git: status, diff, staging, commit, pull, push,
-branch switching, and file browsing — no terminal context-switching.
+**Guck** (Git Duck) is a tiny (almost) always-on-top git toolbar that lives on your screen as a little dude in a duck costume. Click the duck and it expands into a command bar for everyday git: status, diff, staging, commit, pull, push, branch switching, and file browsing — no terminal context-switching.
 
-The duck keeps an eye on your repo even while idle: a **?** bubble appears
-when you have uncommitted changes.
+<img width="310" height="131" alt="image" src="https://github.com/user-attachments/assets/354c5a83-a7c6-42f9-9eaf-60ef58c67d71" />
 
-## Dependencies
+<img width="873" height="53" alt="image" src="https://github.com/user-attachments/assets/097a876e-2867-414d-8d8f-d699f8807c1f" />
+
+
+The duck keeps an eye on your repo even while idle: a **?** bubble appears when you have uncommitted changes.
+
+<img width="266" height="130" alt="image" src="https://github.com/user-attachments/assets/8c163eab-5e1d-4c40-baab-bc433f427b48" />
+
+## Why
+
+The goal is a dev tool I actually want to use while working on other projects, with an emphasis on a minimalistic UI and simply experience. I believe it's important to dogfood (duckfood?) your own work, so the plan is to keep Guck running across my other projects. I hit bugs or want features, I'll file issues and work through them over time.
+
+It started with the goal of only addressing the most basic git use cases. Somewhere along the way I got emotionally attached to the little duck guy. Try him out. Drag him around. It's really fun.
+
+## Download
+
+V0 - [Linux](https://github.com/whuang602/guck/releases/download/v0/Guck-v0-linux-x64.zip) | [MacOS](https://github.com/whuang602/guck/releases/download/v0/Guck-v0-macos-arm64.zip) | [Windows](https://github.com/whuang602/guck/releases/download/v0/Guck-v0-windows-x64.zip)
+
+
+Note: Linux and MacOS will require more extensive testing as I have primarily been playing with it on Windows.
+
+**Why is it such a large download?** Electron apps comes with the chromium browser and Node.js runtime bundled in. I will dig into the MacOS case on a later date.
+
+## Dependencies 
 
 - **git** — must be on your `PATH` (Guck drives the real git binary)
 - **Node.js 18+ and npm** — only needed to install/run from source
 
-Guck has exactly **one** npm dependency: Electron, pinned to an exact
-version. Everything else is hand-written on Node/Electron built-ins — no
-framework, no wrapper packages. Considering recent supply chain attacks for Node,
-I have really been trying to be less dependent on unnecessary dependencies.
+Guck has exactly **one** npm dependency: Electron, pinned to an exact version. Everything else is hand-written on Node/Electron built-ins — no other framework, no wrapper packages. Considering recent supply chain attacks for Node.js, I have really been trying to be less dependent on unnecessary dependencies.
 
 ## Start
 
@@ -45,8 +60,7 @@ run `shell:startup`, and drop a shortcut to `Guck.exe` there.
 
 ## Stop
 
-- The **✕** at the right end of the bar collapses Guck back to the duck —
-  it keeps running quietly.
+- The **✕** at the right end of the bar collapses Guck back to the duck, meaning it will keep running quietly.
 - **Right-click** the duck (or anywhere on the bar/panel) and choose
   **Quit Guck** to exit completely.
 
