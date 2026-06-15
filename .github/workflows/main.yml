@@ -67,9 +67,9 @@ jobs:
         with:
           node-version: 22
 
-      # npm ci installs exactly what package-lock.json pins, and electron's
-      # postinstall downloads the prebuilt runtime for THIS runner's OS.
       - run: npm ci
+
+      - run: node node_modules/electron/install.js
 
       - run: npm run package
 
