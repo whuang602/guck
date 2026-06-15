@@ -1,0 +1,91 @@
+name: Release
+
+on:
+  # Click-to-run button on the Actions tab.
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release tag (e.g. v0)'
+        required: true
+        default: v0
+  # Also runs if you push a tag from the CLI later.
+  push:
+    tags:
+      - 'v*'
+
+# The built-in GITHUB_TOKEN needs write access to create releases & upload assets.
+permissions:
+  contents: write
+
+jobs:
+  # 1. Create the release once, before the parallel builds upload to it.
+  #    The tag comes from the button input, or from the pushed tag's name.
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - name: Resolve tag name
+        id: tag
+        shell: bash
+        run: echo "tag=${{ inputs.version || github.ref_name }}" >> "$GITHUB_OUTPUT"
+
+      - name: Create release if it doesn't exist
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          TAG="${{ steps.tag.outputs.tag }}"
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
+            || gh release create "$TAG" \
+                 --repo "$GITHUB_REPOSITORY" \
+                 --target "$GITHUB_SHA" \
+                 --title "Guck $TAG" \
+                 --generate-notes \
+                 --prerelease
+
+  # 2. Build one artifact per OS in parallel, each on its native runner.
+  build:
+    needs: create-release
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            asset: windows-x64
+          - os: macos-latest      # macos-latest is arm64 (Apple Silicon)
+            asset: macos-arm64
+          - os: ubuntu-latest
+            asset: linux-x64
+    runs-on: ${{ matrix.os }}
+    env:
+      TAG: ${{ needs.create-release.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # npm ci installs exactly what package-lock.json pins, and electron's
+      # postinstall downloads the prebuilt runtime for THIS runner's OS.
+      - run: npm ci
+
+      - run: npm run package
+
+      # Zip the built app. Both tools below omit file ownership metadata.
+      - name: Archive (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: Compress-Archive -Path dist/Guck/* -DestinationPath "Guck-$env:TAG-${{ matrix.asset }}.zip"
+
+      - name: Archive (macOS / Linux)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: cd dist/Guck && zip -r -X "../../Guck-$TAG-${{ matrix.asset }}.zip" .
+
+      - name: Upload to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: gh release upload "$TAG" "Guck-$TAG-${{ matrix.asset }}.zip" --repo "$GITHUB_REPOSITORY" --clobber
