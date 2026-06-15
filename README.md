@@ -13,7 +13,7 @@ The duck keeps an eye on your repo even while idle: a **?** bubble appears when 
 
 ## Why
 
-The goal is a dev tool I actually want to use while working on other projects, with an emphasis on a minimalistic UI and simply experience. I believe it's important to dogfood (duckfood?) your own work, so the plan is to keep Guck running across my other projects. I hit bugs or want features, I'll file issues and work through them over time.
+The goal is a dev tool I actually want to use while working on other projects, with an emphasis on a minimalistic UI and simple experience. I believe it's important to dogfood (duckfood?) your own work, so the plan is to keep Guck running across my other projects. I hit bugs or want features, I'll file issues and work through them over time.
 
 It started with the goal of only addressing the most basic git use cases. Somewhere along the way I got emotionally attached to the little duck guy. Try him out. Drag him around. It's really fun.
 
@@ -24,7 +24,7 @@ V0 - [Linux](https://github.com/whuang602/guck/releases/download/v0/Guck-v0-linu
 
 Note: Linux and MacOS will require more extensive testing as I have primarily been playing with it on Windows.
 
-**Why is it such a large download?** Electron apps comes with the chromium browser and Node.js runtime bundled in. I will dig into the MacOS case on a later date.
+**Why is it such a large download?** Electron apps comes with the chromium browser and Node.js runtime bundled in. It's a feature, albeit an expensive feature.
 
 ## Dependencies 
 
