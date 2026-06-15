@@ -2,18 +2,21 @@
 
 **Guck** (Git Duck) is a tiny (almost) always-on-top git toolbar that lives on your screen as a little dude in a duck costume. Click the duck and it expands into a command bar for everyday git: status, diff, staging, commit, pull, push, branch switching, and file browsing — no terminal context-switching.
 
+<p align="center">
 <img width="310" height="131" alt="image" src="https://github.com/user-attachments/assets/354c5a83-a7c6-42f9-9eaf-60ef58c67d71" />
-
+<br><br>
 <img width="873" height="53" alt="image" src="https://github.com/user-attachments/assets/097a876e-2867-414d-8d8f-d699f8807c1f" />
-
+</p>
 
 The duck keeps an eye on your repo even while idle: a **?** bubble appears when you have uncommitted changes.
 
+<p align="center">
 <img width="266" height="130" alt="image" src="https://github.com/user-attachments/assets/8c163eab-5e1d-4c40-baab-bc433f427b48" />
+</p>
 
 ## Why
 
-The goal is a dev tool I actually want to use while working on other projects, with an emphasis on a minimalistic UI and simple experience. I believe it's important to dogfood (duckfood?) your own work, so the plan is to keep Guck running across my other projects. I hit bugs or want features, I'll file issues and work through them over time.
+The goal is a dev tool I actually want to use while working on other projects, with an emphasis on a minimalistic UI and simple experience. I believe it's important to dogfood (duckfood?) your own work, so the plan is to keep Guck running across my other projects. As I run into bugs or find new features I want to implement, I'll file issues and work through them over time.
 
 It started with the goal of only addressing the most basic git use cases. Somewhere along the way I got emotionally attached to the little duck guy. Try him out. Drag him around. It's really fun.
 
